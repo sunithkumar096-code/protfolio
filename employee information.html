@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Payroll Calculation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .form-container {
+            margin-bottom: 20px;
+        }
+        .result-container {
+            margin-top: 20px;
+        }
+        label {
+            display: block;
+            margin: 5px 0;
+        }
+        input, button {
+            padding: 8px;
+            margin: 5px 0;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Employee Information and Payroll Calculation</h1>
+
+    <div class="form-container">
+        <label for="basicSalary">Basic Salary (₹):</label>
+        <input type="number" id="basicSalary" placeholder="Enter Basic Salary">
+
+        <label for="hra">HRA (%):</label>
+        <input type="number" id="hra" placeholder="Enter HRA Percentage">
+
+        <label for="da">DA (%):</label>
+        <input type="number" id="da" placeholder="Enter DA Percentage">
+
+        <label for="pf">Provident Fund (%) :</label>
+        <input type="number" id="pf" placeholder="Enter PF Percentage">
+
+        <label for="tax">Tax (%):</label>
+        <input type="number" id="tax" placeholder="Enter Tax Percentage">
+
+        <button onclick="calculatePayroll()">Calculate Payroll</button>
+    </div>
+
+    <div class="result-container">
+        <h3>Payroll Details</h3>
+        <p><strong>DA:</strong> ₹<span id="resultDA"></span></p>
+        <p><strong>HRA:</strong> ₹<span id="resultHRA"></span></p>
+        <p><strong>PF:</strong> ₹<span id="resultPF"></span></p>
+        <p><strong>Tax:</strong> ₹<span id="resultTax"></span></p>
+        <p><strong>Gross Pay:</strong> ₹<span id="resultGrossPay"></span></p>
+        <p><strong>Deduction:</strong> ₹<span id="resultDeduction"></span></p>
+        <p><strong>Net Pay:</strong> ₹<span id="resultNetPay"></span></p>
+    </div>
+
+    <script>
+        function calculatePayroll() {
+            // Getting values from input fields
+            let basicSalary = parseFloat(document.getElementById('basicSalary').value);
+            let hraPercent = parseFloat(document.getElementById('hra').value);
+            let daPercent = parseFloat(document.getElementById('da').value);
+            let pfPercent = parseFloat(document.getElementById('pf').value);
+            let taxPercent = parseFloat(document.getElementById('tax').value);
+
+            // Validate input
+            if (isNaN(basicSalary) || basicSalary <= 0) {
+                alert("Please enter a valid Basic Salary");
+                return;
+            }
+
+            // Calculations
+            let DA = (daPercent / 100) * basicSalary;
+            let HRA = (hraPercent / 100) * basicSalary;
+            let PF = (pfPercent / 100) * basicSalary;
+            let Tax = (taxPercent / 100) * basicSalary;
+
+            let grossPay = basicSalary + DA + HRA;
+            let totalDeduction = PF + Tax;
+
+            let netPay = grossPay - totalDeduction;
+
+            // Displaying results
+            document.getElementById('resultDA').textContent = DA.toFixed(2);
+            document.getElementById('resultHRA').textContent = HRA.toFixed(2);
+            document.getElementById('resultPF').textContent = PF.toFixed(2);
+            document.getElementById('resultTax').textContent = Tax.toFixed(2);
+            document.getElementById('resultGrossPay').textContent = grossPay.toFixed(2);
+            document.getElementById('resultDeduction').textContent = totalDeduction.toFixed(2);
+            document.getElementById('resultNetPay').textContent = netPay.toFixed(2);
+        }
+    </script>
+
+</body>
+</html>
